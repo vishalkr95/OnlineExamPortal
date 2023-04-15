@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coding Dashboard </title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/dist/css/adminlte.min.css">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/style.css">
+    
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+    <div th:replace="user/header :: header"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <div class="content">
+            <div class="containers m-0 p-0 col-sm-12" >
+                <div class="row">
+                    <div class="col-sm-12 m-1">
+                        <input type="hidden" id="remainingExamTime" th:value="${exam.getRemainingTime()}">
+                        <div class="countdown text-right" style="font-size: 18px;"><b>Time Remaining :</b> <span id="timer"></span></div>
+                    </div>
+                   <div class="col-sm-1" >
+                       <div class="card mt-5" style="width:60px">
+                           <div class="card-body">
+                               <div class="row">
+                                   <div class="col-12 text-center text-gray text-bold" >
+                                       
+                                   </div>
+                                   <div class="col-12" th:each="i: ${#numbers.sequence(0,exam.getCodingquestions().size()-1)}">
+                                       <div  class="text-center text-bold bg-success p-1 mt-2">
+                                           <a th:href="@{'/'+${exam.getExamCode()}+'/codingexam/'+${i+1}}" th:text="${i+1}" class="d-block"></a>
+                                       </div>
+                           
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="col-sm-11 d-flex">
+                      <div class="col-sm-4 mt-5">
+                        <form th:action="@{'/' + ${exam.getExamCode()} + '/submit'}" method="post">
+                          <div>
+                              <div th:text="'Question '+${question_no}" class="text-bold text-primary mb-2 mr-1"></div>
+                              <div th:text="${question.getStatement()}" class="mb-2 text-bold"></div>
+                          </div>
+                          <input type="hidden" name="question_id" th:value="${question.getId()}">
+                          <div class="form-group">
+                              <div class="form-check" th:each="testcase : ${question.getTestCase()}">
+                                  <div  th:name="testcase" th:text="${testcase.getTestcase()}"></div>
+                                  <div  th:name="answer" th:text="${testcase.getAnswer()}"> </div>                             
+                              </div>
+                          </div>
+                          
+                          <div th:if="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                              <input type="submit" value="Save" class="btn btn-primary float-right">
+                          </div>
+                          <div th:unless="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                              <input type="submit" value="Save and Next" class="btn btn-primary float-right">
+                          </div>
+                      </form>
+                    </div>
+                      <div class="col-sm-8" id="idesection">
+                           <div th:replace="user/index :: ide"></div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                    
+                     <form th:action="@{'/' + ${exam.getExamCode()} + '/submitCode'}" method="post">
+                          
+                          <input type="hidden" name="question_id" th:value="${question.getId()}">
+                          <div th:if="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                              <input type="submit" value="Save" class="btn btn-primary float-right">
+                          </div>
+                          <div th:unless="${exam.isLastQuestion(question.getId())}" class="d-inline">
+                              <input type="submit" value="Save and Next" class="btn btn-primary float-right">
+                          </div>
+                      </form>
+                    
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/demo.js"></script>
+
+<script>
+    // Set the date we're counting down to
+    var remainingExamTime=$('#remainingExamTime').val()/1000;
+    calculateTime(remainingExamTime);
+    // Update the count down every 1 second
+    setInterval(function() {
+       calculateTime(--remainingExamTime);
+    }, 1000);
+
+    function calculateTime(time)
+    {
+        var minRemaining=Math.floor(time/60);
+        var secRemaining=Math.floor(time%60);
+        var text=minRemaining+" mins "+secRemaining+" sec";
+        $("#timer").html(text);
+        if(Math.floor(time)<=0){
+            console.log("hello clicked");
+            var href = $("#submitButton").attr('href');
+            window.location.href = href;
+        }
+    }
+</script>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/public/lib/ace.js"></script>
+    <script src="/public/lib/theme-monokai.js"></script>
+    <script src="/public/lib/theme-solarized_light.js"></script>
+    <script src="/public/lib/theme-solarized_dark.js"></script>
+    <script src="/public/lib/theme-dracula.js"></script>
+    <script src="/public/lib/theme-textmate.js"></script>
+    <script src="/public/lib/theme-tomorrow_night.js"></script>
+    <script src="/public/lib/theme-twilight.js"></script>
+    <script src="/public/lib/theme-cobalt.js"></script>
+    <script src="/public/lib/ext-language_tools.js"></script>
+    <script src="/public/ide.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
+</body>
+</html>

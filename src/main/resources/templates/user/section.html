@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sections </title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/webjars/AdminLTE/3.0.0/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition layout-top-nav">
+<div class="wrapper">
+
+    <div th:replace="user/header :: header"></div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 m-1">
+                        <input type="hidden" id="startTime" th:value="${exam.getStartTimeInMilliseconds()}">
+                        <div class="countdown text-right" style="font-size: 18px;"><b>Starts In :</b> <span id="timer"></span></div>
+                    </div>
+                    <div class="col-sm-6">
+                       <div class="card mt-2">
+                           <div class="card-header">Aptitude section</div>
+                           <div class="card-body"> <div class="form-group text-center">
+                                <a th:href="@{'/'+${exam.getExamCode()}+'/aptiexam'}"  class="btn btn-primary go disabled">Go</a>
+                            </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card mt-2">
+                            <div class="card-header">Coding Section</div>
+                            <div class="card-body">
+                                 <div class="form-group text-center">
+                                <a th:href="@{'/'+${exam.getExamCode()}+'/codingexam'}"  class="btn btn-primary go disabled">Go</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/webjars/AdminLTE/3.0.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="/webjars/AdminLTE/3.0.0/dist/js/demo.js"></script>
+<script>
+    // Set the date we're counting down to
+    var remainingExamStartTime=$('#startTime').val()/1000;
+    calculateTime(remainingExamStartTime);
+    // Update the count down every 1 second
+    setInterval(function() {
+        calculateTime(--remainingExamStartTime);
+    }, 1000);
+
+    function calculateTime(time)
+    {
+        var minRemaining=Math.floor(time/60);
+        var secRemaining=Math.floor(time%60);
+        var text=minRemaining+" mins "+secRemaining+" sec";
+        if(Math.floor(time)<=0){
+           $(".go").removeClass("disabled");
+            $("#timer").html("Already started");
+        }else{
+            $("#timer").html(text);
+        }
+    }
+</script>
+
+</body>
+</html>

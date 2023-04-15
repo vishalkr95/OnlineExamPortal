@@ -1,0 +1,171 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
+body{
+	padding-top:5px!important;
+}
+
+.fill{
+    height:480px;
+    min-height: 100%;
+}
+.row{
+    height: 100%;
+    min-height: 100%;
+}
+#small{
+  --bs-gutter-x: 0.2rem !important;
+}
+#idesection{
+    padding: 3.7em 0 1em 0;
+}
+
+#editor{
+   font-size:large; 
+   font-family: monospace !important;
+   
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    
+  }
+  
+
+::-webkit-scrollbar-track {
+    background: #353535;
+    border: 2px solid #353535 ;
+    border-radius: 10px;
+}
+  
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    border-radius: 10px;    
+}
+.scrolled-down{
+    transform:translateY(-100%); transition: all 0.3s ease-in-out;
+  }
+  .scrolled-up{
+    transform:translateY(0); transition: all 0.3s ease-in-out;
+  }
+
+   .dropdown:hover .dropdown-menu{
+    display: block;
+}
+/*.dropdown-menu{
+    margin-top: 0;
+} */
+div.ace_editor.ace_autocomplete {
+    width: 40%;
+    font-size:1em;
+ }
+
+ #testing{
+     height: 45%;
+ }
+#inputs{
+    height: 11%;
+    font-family: 'Hack';
+}
+#outputs{
+    height: 11%;
+    font-family: 'Hack';
+
+}
+#idesection {
+    margin: 0px;
+  }
+  
+  .idewrapper {
+    display: flex;
+  }
+  
+  .disable-select {
+    user-select: none; /* supported by Chrome and Opera */
+   -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+   -moz-user-select: none; /* Firefox */
+   -ms-user-select: none; /* Internet Explorer/Edge */
+}
+div.ace_scrollbar.ace_scrollbar-v{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+
+}
+  
+  .handler {
+    width: 10px;
+    /* padding: 0; */
+    cursor: ew-resize;
+    /* z-index: -1; */
+    /* flex: 0 0 auto; */
+  }
+  
+  /* .handler::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 100%;
+    
+    margin: 0 auto;
+  } */
+  #snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 300px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color:white; /* Black background color */
+    color: black; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 5px; /* Rounded borders */
+    padding: 11px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 87%; /* Center the snackbar */
+    bottom: 10px; /* 30px from the bottom */
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+/* #colourchange:hover{
+  background-color: #0d6efd;
+
+} */
+.dropdown-item:hover {background-color: #0d6efd;}
